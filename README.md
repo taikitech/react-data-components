@@ -18,14 +18,17 @@ var React = require('react');
 var DataTable = require('react-data-components').DataTable;
 
 var columns = [
-  { title: 'Name', prop: 'name', type: 'STRING' },
+  { title: 'Name', prop: 'name', type: 'ELEMENT_STRING' },
   { title: 'City', prop: 'city', type: 'STRING' },
   { title: 'Address', prop: 'address', type: 'STRING' },
   { title: 'Phone', prop: 'phone', type: 'NUMBER' }
 ];
 
 var data = [
-  { name: 'name value', city: 'city value', address: 'address value', phone: 'phone value' }
+  { id: 1, name: <a href="profile/1" sortValue="Victor"><span>Victor</span></a>, city: 'Kiev', address: 'some 
+  address',  phone: '380634988888' },
+  { id: 2, name: <a href="profile/2" sortValue="Ambassador"><span>Ambassador</span></a>, city: 'Kiev', address: 'some 
+  address',  phone: '380634988888' },
   // It also supports arrays
   // [ 'name value', 'city value', 'address value', 'phone value' ]
 ];
@@ -33,11 +36,11 @@ var data = [
 React.render((
     <DataTable
       className="container"
-      keys={[ 'name', 'address' ]}
+      keys={[ 'id' ]}
       columns={columns}
       initialData={data}
       initialPageLength={5}
-      initialSortBy={{ prop: 'city', order: 'desc' }}
+      initialSortBy={{ prop: 'name', order: 'ascending' }}
       pageLengthOptions={[ 5, 20, 50 ]}
     />
   ), document.body);
@@ -65,6 +68,11 @@ The title to display on the header.
 
 ### `prop: string | number`
 The name of the property or index on the data.
+
+### `type: string[STRING|NUMBER|ELEMENT_STRING|ELEMENT_NUMBER]`
+ELEMENT_STRING or ELEMENT_NUMBER sort by React components. 
+ReactElement need provide prop - "sortValue" to sort by this value;
+The title to display on the header.
 
 ### `render: (val: any, row: any) => any`
 Function to render a different component.
