@@ -37,8 +37,8 @@ module.exports = {
   componentWillMount() {
     // Do the initial sorting if specified.
     var {sortBy, data} = this.state;
-    var type = _.find(this.props.columns, { 'prop': sortBy.prop }).type;
     if (sortBy && data.length > 0) {
+      var type = _.find(this.props.columns, { 'prop': sortBy.prop }).type;
       this.setState({ data: sort(sortBy, data, type) });
     }
   },

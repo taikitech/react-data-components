@@ -11,14 +11,6 @@ function buildTable(reqData) {
         Google Maps
       </a>;
 
-  /*var tableColumns = [
-    { title: 'Name', prop: 'NAME' },
-    { title: 'City', prop: 'CITY' },
-    { title: 'Street address', prop: 'STREET ADDRESS' },
-    { title: 'Phone', prop: 'PHONE NUMBER', defaultContent: '<no phone>' },
-    { title: 'Map', render: renderMapUrl, className: 'text-center' }
-  ];*/
-
   var tableColumns = [
     { title: 'Hour', prop: 'hour', type: 'ELEMENT_NUMBER'},
     { title: 'Name', prop: 'name', type: 'ELEMENT_STRING'},
@@ -44,7 +36,6 @@ function buildTable(reqData) {
       columns={tableColumns}
       initialData={data}
       initialPageLength={50}
-      initialSortBy={{ prop: 'name', order: 'ascending' }}
       pageLengthOptions={[ 5, 20, 50 ]}
     />
   );
