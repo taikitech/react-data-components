@@ -36,6 +36,7 @@ function buildTable(reqData) {
       columns={tableColumns}
       initialData={data}
       initialPageLength={50}
+      options={false}
       pageLengthOptions={[ 5, 20, 50 ]}
     />
   );

@@ -17,7 +17,7 @@ var DataTable = React.createClass({
     var page = this.buildPage();
     return (
       <div className={this.props.className}>
-        <div className="row table-options">
+        <div className={"row table-options " + (this.props.options === false ? 'hide' : '')} >
           <div className="col-xs-4">
             <SelectField
               id="page-menu"
