@@ -1,4 +1,5 @@
 'use strict';
+var React = require('react');
 
 /**
  * Determines if at least one element in the object matches a truth test.

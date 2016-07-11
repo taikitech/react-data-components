@@ -3,45 +3,125 @@ require('../../css/table-twbs.css');
 var React = require('react');
 var { DataTable } = require('react-data-components');
 var d3 = require('d3');
+var _ = require('lodash');
 
-function buildTable(reqData) {
-  var renderMapUrl =
-    (val, row) =>
-      <a href={`https://www.google.com/maps?q=${row['LAT']},${row['LON']}`}>
-        Google Maps
-      </a>;
+var App = React.createClass({
+  getInitialState(){
+    /*var data = this.props.rows.map((item, i) => {
+     item.ukey = i;
+     return item;
+     });*/
+    return {
+      tableColumns: this.props.cols,
+      data: this.props.data,
+      loading: 'loading false'
+    }
+  },
 
-  var tableColumns = [
-    { title: 'Hour', prop: 'hour', type: 'ELEMENT_NUMBER'},
-    { title: 'Name', prop: 'name', type: 'ELEMENT_STRING'},
-    { title: 'City', prop: 'city', type: 'STRING' },
-    { title: 'Street address', prop: 'address', type: 'STRING' },
-    { title: 'Phone', prop: 'phone', defaultContent: '<no phone>', type: 'NUMBER' }
-  ];
+  handleChange(data) {
+    console.log(data.length);
+    this.setState({
+      data: data
+    });
+    // console.log('Change', data);
+  },
 
-  var data = [
-    { ukey: 1, hour: <span sortValue={null}></span>, name:  <div sortValue={null}><span></span><span></span></div>, city: 'city value2', address: 'address value', phone: '1,000,000' },
-    { ukey: 2, hour: <span sortValue="10,100">10,100</span>,name: <div sortValue="0"><span>0</span><span></span></div>, city: 'city value5', address: 'address value', phone: '9' },
-    { ukey: 3, hour: <span sortValue="1,100,100">1,100,100</span>,name: <div sortValue="a"><span>a</span><span></span></div>, city: 'city value1', address: 'address value', phone: '1' },
-    { ukey: 4, hour: <span sortValue="60">60</span>,name: <div sortValue="b"><span>b</span><span></span></div>, city: 'city value1', address: 'address value', phone: '300' },
-    { ukey: 5, hour: <span sortValue="0">0</span>, name: <div sortValue={null}><span></span><span></span></div>, city: 'city value1', address: 'address value', phone: '500' },
-    { ukey: 6, hour: <span sortValue="10">10</span>, name: <div sortValue="cc"><span>cc</span><span></span></div>, city: 'city value6', address: 'address value', phone: '9,999' },
-    { ukey: 7, hour: <span sortValue="50">50</span>, name: <div sortValue="xx"><span>xx</span><span></span></div>, city: 'city value6', address: 'address value', phone: '9,999' }
-  ];
+  handleClick() {
+    this.setState({
+      data: [ {
+        id: 1,
+        name: 'Package 2',
+        descr: 'Some descr ess',
+        tags: ['pack 1', 'some another tag'],
+        display_url: 'http://some.com',
+        ad_modality: ['1', '2'],
+        ad_sizes: ['300x200'],
+        sites: ['123', '22'],
+        zones: ['123', '22']
+      }, {
+        id: 2,
+        name: 'Package 654',
+        descr: 'Some descr df',
+        tags: ['pack 1', 'some another tag'],
+        display_url: 'http://some.com',
+        ad_modality: ['Desktop Video'],
+        ad_sizes: ['300x200'],
+        sites: ['123', '22'],
+        zones: ['123', '22']
+      }]
+    });
+  },
 
-  return (
-    <DataTable
-      className="container"
-      keys={[ 'ukey' ]}
-      columns={tableColumns}
-      initialData={data}
-      initialPageLength={50}
-      options={false}
-      pageLengthOptions={[ 5, 20, 50 ]}
-    />
-  );
-}
+  handleState() {
+    this.setState({
+      loading: 'loading true'
+    });
+  },
 
-d3.csv('/sample_data.csv', function(error, rows) {
-  React.render(buildTable(rows), document.body);
+  render() {
+    return (
+      <div>
+        <button onClick={this.handleClick}>Change data</button>
+        <button onClick={this.handleState}>Change state</button>
+
+        <div>{this.state.loading}</div>
+        <DataTable
+          className="container"
+          keys={[ 'id' ]}
+          columns={this.state.tableColumns}
+          initialData={this.state.data}
+          initialPageLength={5}
+          initialSortBy={{ prop: 'name', order: 'ascending' }}
+          pageLengthOptions={[ 5, 20, 50 ]}
+          onChange={this.handleChange}
+        />
+      </div>
+    );
+  }  
 });
+
+const data = [
+  {
+    id: 0,
+    name: 'Package 1',
+    descr: 'Some descr',
+    tags: ['pack 1', 'some another tag'],
+    display_url: 'http://some.com',
+    ad_modality: ['1', '2'],
+    ad_sizes: ['300x200'],
+    sites: ['123', '22'],
+    zones: ['123', '22']
+  }, {
+    id: 1,
+    name: 'Package 2',
+    descr: 'Some descr ess',
+    tags: ['pack 1', 'some another tag'],
+    display_url: 'http://some.com',
+    ad_modality: ['1', '2'],
+    ad_sizes: ['300x200'],
+    sites: ['123', '22'],
+    zones: ['123', '22']
+  }, {
+    id: 2,
+    name: 'Package 654',
+    descr: 'Some descr df',
+    tags: ['pack 1', 'some another tag'],
+    display_url: 'http://some.com',
+    ad_modality: ['Desktop Video'],
+    ad_sizes: ['300x200'],
+    sites: ['123', '22'],
+    zones: ['123', '22']
+  }
+];
+
+const COLUMNS = [
+  {title: 'Package Name', prop: 'name', type: 'STRING'},
+  {title: 'Description', prop: 'descr', type: 'STRING'},
+  {title: 'Ad Modality', prop: 'ad_modality', type: 'STRING'},
+  {title: 'Ad Sizes', prop: 'ad_sizes', type: 'STRING'},
+  {title: 'Sites', prop: 'sites', type: 'STRING'},
+  {title: 'Zones', prop: 'zones', type: 'STRING'},
+  {title: 'Actions', prop: 'actions', sorted: false, type: 'STRING'}
+];
+
+React.render(<App data={data} cols={COLUMNS}/>, document.body);

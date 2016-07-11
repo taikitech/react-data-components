@@ -55,6 +55,15 @@ module.exports = {
         filterValues: filterValues,
         currentPage: 0
       });
+    } else {
+      this.setState({
+        data: nextProps.initialData,
+        initialData: nextProps.initialData,
+        currentPage: 0,
+        filterValues: {
+          globalSearch: ''
+        }
+      });
     }
   },
 
