@@ -105,22 +105,6 @@ function sort(sortBy, data, type) {
   if (sortBy.order === 'descending') {
     sortedData.reverse();
   }
-  /*if (isNumber(parseFloat(obj[sortBy.prop], 10))) {
-    sortedData = data.sort(sortByNumberFunc(sortBy.prop));
-  } else {
-    if (React.isValidElement(obj[sortBy.prop])) {
-      if(isNumber(parseFloat(obj[sortBy.prop].props.sortValue.replace(/[\s\$%,]/gm, ''), 10))){
-        sortedData = data.sort(sortByNumberElement(sortBy.prop));
-      } else {
-        sortedData = data.sort(sortByElement(sortBy.prop));
-      }
-    } else {
-      sortedData = data.sort(sortByFunc(sortBy.prop));
-    }
-  }
-  if (sortBy.order === 'descending') {
-    sortedData.reverse();
-  }*/
   return sortedData;
 }
 
